@@ -1,0 +1,6 @@
+app/bower_components
+node_modules
+npm-debug.log
+.idea
+config/aws-cred.json
+config/config.json

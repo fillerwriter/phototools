@@ -1,0 +1,15 @@
+{
+  "name": "phototools",
+  "version": "0.0.0",
+  "authors": [
+    "Brandon Morrison <bmorrison@phase2technology.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "~1.4.0",
+    "bourbon": "~4.2.3",
+    "bitters": "~1.0.0",
+    "singularity": "~1.6.2",
+    "angular-route": "~1.4.0"
+  }
+}

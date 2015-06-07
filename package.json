@@ -1,0 +1,26 @@
+{
+  "name": "phototools",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brandon Morrison <brandon@brandonmorrison.com> (http://brandonmorrison.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1.32",
+    "bunyan": "^1.4.0",
+    "gm": "^1.18.1",
+    "hapi": "^8.6.0",
+    "hapi-bunyan": "^0.6.0",
+    "lodash": "^3.9.3",
+    "moment": "^2.10.3",
+    "pg": "^4.3.0",
+    "shortid": "^2.2.2"
+  },
+  "devDependencies": {
+    "grunt-sass": "^1.0.0"
+  }
+}
