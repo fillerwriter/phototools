@@ -1,9 +1,6 @@
 var db = require('../../bootstrap/database');
 var AWS = require('aws-sdk');
 
-var fs = require('fs');
-var zlib = require('zlib');
-
 var _ = require('lodash');
 
 var shortid = require('shortid');
@@ -35,19 +32,15 @@ var PhotoController = function() {
     file: function(id, size) {
       return db.query("SELECT data FROM photo WHERE data->>'id' = $1", [id])
         .then(function(data) {
-          console.log("load data", data);
-          var inputStream = s3.getObject({'Bucket': 'bjm-phototools', 'Key': data[0].data.key}).createReadStream();
+          var key = (size == 'o') ? data[0].data.key : data[0].data.resized[size];
+
+          var inputStream = s3.getObject({'Bucket': 'bjm-phototools', 'Key': key}).createReadStream();
 
           inputStream.on('data', function(chunk) {
             //console.log('got %d bytes of data', chunk.length);
           });
 
-          if (size == 'o') {
-            return inputStream;
-          }
-
-          var outputStream = gm(inputStream).resize(200, 200).stream();
-          return outputStream;
+          return inputStream;
         }, function() {
           console.log("ERROR");
         });
@@ -56,15 +49,19 @@ var PhotoController = function() {
       var body = f;
       var slug = shortid.generate();
       var fileSlug = shortid.generate();
+      var fileName = fileSlug + '.jpg';
 
-      var s3obj = new AWS.S3({params: {Bucket: 'bjm-phototools', Key: fileSlug + '.jpg' }});
+      var s3obj = new AWS.S3({params: {Bucket: 'bjm-phototools', Key: fileName }});
       s3obj.upload({Body: body}).
         on('httpUploadProgress', function(evt) { console.log(evt); }).
         send(function(err, data) { console.log(err, data) });
 
+      var resized = this.process(slug, body);
+
       var uploadData = {
         id: slug,
-        key: fileSlug + '.jpg'
+        key: fileName,
+        resized: resized
       };
 
       console.log(JSON.stringify(uploadData));
@@ -78,6 +75,33 @@ var PhotoController = function() {
     },
     save: function() {
 
+    },
+    // @TODO: Split into separate object
+    process: function(slug, file) {
+      var sizes = {
+        "thumb": [250, 250],
+        "s"    : [200, 200],
+        "m"    : [640, 480],
+        "l"    : [1024, 768],
+        "xl"   : [2048, 1536]
+      };
+
+      var sizeFiles = {};
+
+      var fileName = slug + '.jpg';
+      var inputStream = gm(file, fileName);
+
+      _.forEach(sizes, function(size, key) {
+        var resizeSlug = shortid.generate();
+        var s3obj = new AWS.S3({params: {Bucket: 'bjm-phototools', Key: resizeSlug + ".jpg" }});
+        s3obj.upload({Body: inputStream.resize(size[0], size[1]).stream() }).
+          on('httpUploadProgress', function(evt) { console.log(evt); }).
+          send(function(err, data) { console.log(err, data) });
+
+        sizeFiles[key] = resizeSlug + '.jpg';
+      });
+
+      return sizeFiles;
     }
   }
 };

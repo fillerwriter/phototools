@@ -17,6 +17,9 @@ var config = {
   register: require('hapi-bunyan'),
   options: {
     logger: bunyan.createLogger({ name: 'phototools', level: 'debug' }),
+    payload: {
+      maxBytes: 10485760
+    }
   }
 };
 
