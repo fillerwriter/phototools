@@ -12,6 +12,7 @@ module.exports = [
     method: 'GET',
     path: '/api/photo',
     handler: function(request, reply) {
+      request.log.info("Request: Photo list");
       var photoController = require('../components/photo/photo.controller')();
       reply( photoController.list() );
     }

@@ -18,9 +18,13 @@
     "lodash": "^3.9.3",
     "moment": "^2.10.3",
     "pg": "^4.3.0",
+    "pg-promise": "^1.7.7",
+    "q": "^1.4.1",
     "shortid": "^2.2.2"
   },
   "devDependencies": {
-    "grunt-sass": "^1.0.0"
+    "chai": "^3.0.0",
+    "grunt-sass": "^1.0.0",
+    "mocha": "^2.2.5"
   }
 }
