@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+var dbManager = require("../server/bootstrap/databaseUpdateManager");
+
+var args = process.argv.slice(2);
+
+dbManager.process(args);
