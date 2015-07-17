@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
   <!-- Place favicon.ico in the root directory -->
   <!--<script src="js/vendor/modernizr-2.8.3.min.js"></script>-->
 </head>
@@ -17,9 +18,17 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<p>Hello world! This is HTML5 Boilerplate.</p>
-
-<div ng-cloak photo></div>
+<header>Photo Tools</header>
+<div id="app-sidebar">
+  <ul>
+    <li>By Category</li>
+    <li>By Date</li>
+    <li>By People</li>
+  </ul>
+</div>
+<div id="app-content">
+  <div ng-cloak photo></div>
+</div>
 
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
