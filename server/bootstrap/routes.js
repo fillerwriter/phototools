@@ -40,20 +40,20 @@ module.exports = [
     }
   },
   {
+    method: 'PUT',
+    path: '/api/photo/{id}',
+    handler: function(request, reply) {
+      var photoController = require('../components/photo/photo.controller')();
+      reply( photoController.save(request.params.id) );
+    }
+  },
+  {
     method: 'GET',
     path: '/api/file/{id}/{size?}',
     handler: function(request, reply) {
       var photoController = require('../components/photo/photo.controller')();
       var size = (request.params.size) ? request.params.size : 'o';
       reply( photoController.file(request.params.id, size) );
-    }
-  },
-  {
-    method: 'GET',
-    path: '/api/helper/shortcode',
-    handler: function(request, reply) {
-      var shortid = require('shortid');
-      reply(shortid.generate());
     }
   }
 ];

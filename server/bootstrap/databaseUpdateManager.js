@@ -27,7 +27,13 @@ dbUpdateManager.update = function() {
       }
       process.exit(0);
     });
-  //db.query("CREATE TABLE var (name  varchar(128), val jsonb)")
+
+  db.query("CREATE TABLE photo ( data jsonb ) WITH ( OIDS=TRUE );")
+    .then(function(data) {
+
+    });
+
+  //db.query("CREATE TABLE var (name  varchar(127), val jsonb)")
   //  .then(function(data) {
   //    console.log(data);
   //    return;
